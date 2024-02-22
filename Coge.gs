@@ -94,13 +94,13 @@ function sendMail() {
   var name_cell = "C14:I14";
   hideSheets();
   var bodyMessage = ["Hello there!",
-    "The file is a leave request for %s days, in the period from/to - %s/%s.",
+    `The file is a leave request for ${dt.daysOff} ${dt.daysOff == 1 ? 'day' : 'days'}, in the period from/to - ${dt.from}/${dt.to}.`,
     "Thank you!"];
 
   var message = {
     to: sent_to.join(";"),
     subject: "application for leave approval",
-    body: Utilities.formatString(bodyMessage.join("\r\n"), dt.daysOff, dt.from, dt.to),
+    body: bodyMessage.join("\r\n"),
     attachments: {
       attachments: [SpreadsheetApp.getActiveSpreadsheet().getAs(MimeType.PDF).setName(Utilities.formatString("application-for-leave-approval-%s-[%s-%s].pdf", sheetEmployees.getRange('G1').getValue(), dt.from, dt.to))],
       name: getDataFromCell(name_cell).toString()
